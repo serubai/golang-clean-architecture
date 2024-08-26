@@ -1,0 +1,27 @@
+version: '3.8'
+
+networks:
+  net-bridge:
+    driver: bridge
+    name: net-bridge
+
+services:
+  #service
+  service:
+    image: 'ubedev/brantas:12'
+    ports:
+      - '8910:8910'
+    # network_mode: "host" //using when in vps or not local development
+    depends_on:
+      - mongo
+
+  #mongo
+  mongo:
+    image: mongo:4.2.10-bionic
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - net-bridge
